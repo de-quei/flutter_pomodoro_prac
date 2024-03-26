@@ -44,7 +44,40 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Flexible(
             flex: 1,
-            child: Container(),
+            child: Row(
+              //Row로 감싸면 컨테이너의 위치가 bottomCenter에서 bottomLeft로 이동.
+              children: [
+                Expanded(
+                  //Expended : 위젯을 확장시켜주는 역할
+                  child: Container(
+                    //컨테이너만 설정하면 텍스트가 들어간 컨테이너가 BottomCenter에만 자리를 차지함.
+                    decoration:
+                        BoxDecoration(color: Theme.of(context).cardColor),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Pomodoros',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color:
+                                Theme.of(context).textTheme.displayLarge!.color,
+                          ),
+                        ),
+                        Text(
+                          '0',
+                          style: TextStyle(
+                            fontSize: 58,
+                            color:
+                                Theme.of(context).textTheme.displayLarge!.color,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
