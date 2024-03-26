@@ -11,6 +11,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // 테마 설정 (파일 분할 방법이 아니라 ThemeData를 많이 쓰나 봄!)
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
           backgroundColor: const Color(0xFFE7626C),
