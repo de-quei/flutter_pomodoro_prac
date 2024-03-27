@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int totalSeconds = 1500; // 25분을 초로 환산하면 1500초
+  bool isRunning = false; // 동작여부를 나타내는 변수
   late Timer timer; // late modifier : property를 당장 초기화 하지 않아도 됨을 의미
 
   // onTick 함수는 State를 변경함.
@@ -20,12 +21,24 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  // 동작할때 메서드
   void onStartPressed() {
     // Timer.periodic(duration(주기), (timer) { })
     // timer 함수를 주기별로 실행함을 의미. 주기는 마음대로 지정할 수 있음.
     // 함수를 넣을 때 괄호를 넣지 않는 것을 기억하기! (타이머가 알아서 괄호의 역할을 수행해줌)
     timer = Timer.periodic(const Duration(seconds: 1), onTick);
     // Timer는 1초에 한번씩 onTick 함수를 실행.
+    setState(() {
+      isRunning = true; // 동작 여부를 true로 변경 후 State도 변경해줌.
+    });
+  }
+
+  // 동작이 멈췄을때 메서드
+  void onPausePressed() {
+    timer.cancel(); // 타이머가 멈추고
+    setState(() {
+      isRunning = false; // 동작 여부를 false로 변경 후 State도 변경해줌.
+    });
   }
 
   @override
@@ -57,8 +70,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: IconButton(
                 iconSize: 120,
                 color: Theme.of(context).cardColor,
-                onPressed: onStartPressed,
-                icon: const Icon(Icons.play_circle_outline),
+                // 삼항 연산자로 경우에 맞는 메서드를 실행.
+                onPressed: isRunning ? onPausePressed : onStartPressed,
+                icon: Icon(isRunning
+                    ? Icons.pause_circle_outline
+                    : Icons.play_circle_outline),
               ),
             ),
           ),
